@@ -7,8 +7,9 @@ class ResponseCodes:
 
 class ResponseMessages:
     CREATE_SUCCESS = {"ok": True}
-    CONFLICT_MESSAGE = "Этот логин уже используется"
+    CONFLICT_MESSAGE = "Этот логин уже используется. Попробуйте другой."
     BAD_REQUEST_MESSAGE = "Недостаточно данных для создания учетной записи"
+    LOGIN_BAD_REQUEST_MESSAGE = "Недостаточно данных для входа"
     LOGIN_NOT_FOUND = "Учетная запись не найдена"
     ORDER_CREATED = {"track": ""}
 

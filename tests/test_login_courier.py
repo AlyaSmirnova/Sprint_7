@@ -8,11 +8,12 @@ from src.data import ResponseCodes, ResponseMessages
 class TestCourierLogin:
     @allure.title('Успешная авторизация курьера')
     def test_successful_courier_authorization(self, new_courier):
+        create_response = requests.post(f'{Config.URL}{Config.COURIER_URL}', data=new_courier)
         courier_data = {
-            'login': new_courier[0],
-            'password': new_courier[1]
+            'login': new_courier['login'],
+            'password': new_courier['password']
         }
-        response = requests.post(f'{Config.URL}/courier/login', data = courier_data)
+        response = requests.post(f'{Config.URL}{Config.COURIER_LOGIN_URL}', data = courier_data)
         assert response.status_code == ResponseCodes.OK, "Ожмдался код 200, авторизация провалена"
         assert 'id' in response.json()
 
@@ -20,32 +21,32 @@ class TestCourierLogin:
     @pytest.mark.parametrize('missing_field', ['login', 'password'])
     def test_authorization_without_necessary_field(self, new_courier, missing_field):
         courier_data = {
-            'login': new_courier[0],
-            'password': new_courier[1]
+            'login': new_courier['login'],
+            'password': new_courier['password']
         }
-        del courier_data[missing_field]
+        courier_data[missing_field] = ''
 
-        response = requests.post(f'{Config.URL}/courier/login', data = courier_data)
+        response = requests.post(f'{Config.URL}{Config.COURIER_LOGIN_URL}', data = courier_data)
         assert response.status_code == ResponseCodes.BAD_REQUEST, "Ожидался код 400, не все обязательные поля заполнены"
-        assert response.json()['message'] == ResponseMessages.BAD_REQUEST_MESSAGE
+        assert response.json()['message'] == ResponseMessages.LOGIN_BAD_REQUEST_MESSAGE
 
     @allure.title('Проверка авторизации с неверным паролем')
     def test_authorization_with_incorrect_password(self, new_courier):
         courier_data = {
-            'login': new_courier[0],
+            'login': new_courier['login'],
             'password': 'incorrect_password'
         }
 
         response = requests.post(f'{Config.URL}/courier/login', data = courier_data)
-        assert response.status_code == ResponseCodes.BAD_REQUEST, "Ожидался код 400, неверный пароль"
-        assert response.json()['message'] == ResponseMessages.BAD_REQUEST_MESSAGE
+        assert response.status_code == ResponseCodes.NOT_FOUND, "Ожидался код 404, неверный пароль"
+        assert response.json()['message'] == ResponseMessages.LOGIN_NOT_FOUND
 
 
     @allure.title("Проверка авторизации несуществующего пользователя")
-    def test_authorization_nonexisting_courier(self):
+    def test_authorization_not_existing_courier(self):
         courier_data = {
-            'login': 'nonexisting_login',
-            'password': 'nonexisting_password'
+            'login': 'not_existing_login',
+            'password': 'not_existing_password'
         }
         response = requests.post(f'{Config.URL}/courier/login', data = courier_data)
         assert response.status_code == ResponseCodes.NOT_FOUND, "Ожидался код 404, несуществующий пользователь"

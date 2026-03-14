@@ -6,7 +6,6 @@ from src.helpers import register_new_courier_and_return_login_password
 from src.data import ResponseCodes, VALID_COURIER, INVALID_COURIERS, ORDER_DATA
 
 
-# фикстура создает нового курьера
 @pytest.fixture
 def new_courier():
     with allure.step('Создание нового курьера'):
@@ -33,12 +32,10 @@ def new_courier():
                 courier_id = login_response.json().get('id')
                 requests.delete(f'{Config.URL}/courier/{courier_id}')
 
-# фикстура дает корректные данные для создания курьера
 @pytest.fixture
 def auth_courier():
     return VALID_COURIER.copy()
 
-# фикстура дает неверные учетные данные
 @pytest.fixture
 def unauth_courier():
     return INVALID_COURIERS.copy()

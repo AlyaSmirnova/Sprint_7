@@ -31,7 +31,7 @@ ORDER_DATA = {
         'metroStation': 3,
         'phone': '+7 911 365 78 93',
         'rentTime': 5,
-        'deliveryTime': '2025-05-05',
+        'deliveryTime': '2026-05-05',
         'comment': 'call before'
     }
 

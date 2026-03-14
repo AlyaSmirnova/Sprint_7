@@ -2,14 +2,16 @@ import requests
 import allure
 import random
 import string
+import json
 from src.config import Config
 
 
 # метод регистрации нового курьера возвращает список из логина и пароля
 # если регистрация не удалась, возвращает пустой список
+@allure.step('Register a new courier and return login and password')
 def register_new_courier_and_return_login_password():
     # метод генерирует строку, состоящую только из букв нижнего регистра, в качестве параметра передаём длину строки
-    @allure.step('Генерация случайной строки длиной {length}')
+    @allure.step('Generate random string of length {length}')
     def generate_random_string(length):
         letters = string.ascii_lowercase # это константа из модуля string, которая содержит все буквы английского алфавита в нижнем регистре
         random_string = ''.join(random.choice(letters) for i in range(length))
@@ -18,7 +20,7 @@ def register_new_courier_and_return_login_password():
 
     # создаём список, чтобы метод мог его вернуть
     login_pass = []
-    with allure.step('Готовим данные для создания курьера'):
+    with allure.step('Prepare courier registration data'):
         # генерируем логин, пароль и имя курьера
         login = generate_random_string(10)
         # создает случайный логин из 10 букв
@@ -34,7 +36,8 @@ def register_new_courier_and_return_login_password():
     }
     # ключи словаря соответствуют ожидаемой API-структуре
     # отправляем запрос на регистрацию курьера и сохраняем ответ в переменную response
-    response = requests.post(f'{Config.URL}/courier', data=payload)
+    with allure.step('Send POST request to create a courier'):
+        response = requests.post(f'{Config.URL}/courier', data=payload)
 
     # если регистрация прошла успешно (код ответа 201), добавляем в список логин и пароль курьера
     if response.status_code == 201:

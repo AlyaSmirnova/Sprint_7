@@ -6,9 +6,10 @@ on:
   pull_request:
     branches: [ "main", "master" ]
 
-# Даем права на запись контента для публикации отчетов на GitHub Pages
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   test:
@@ -29,8 +30,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run API tests
-        # Если тесты упадут, мы всё равно хотим сгенерировать отчет
-        run: pytest
+        run: |
+          mkdir -p allure-results
+          pytest
         continue-on-error: true
 
       - name: Get Allure history
@@ -51,8 +53,9 @@ jobs:
 
       - name: Deploy report to Github Pages
         if: always()
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-history
+          publish_branch: gh-pages
           force_orphan: true

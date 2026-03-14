@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "main", "master" ]
 
+# Даем права на запись контента для публикации отчетов на GitHub Pages
+permissions:
+  contents: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -25,7 +29,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run API tests
-        # Запускаем pytest, он сам подхватит настройки из pytest.ini
+        # Если тесты упадут, мы всё равно хотим сгенерировать отчет
         run: pytest
         continue-on-error: true
 
@@ -51,3 +55,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-history
+          force_orphan: true

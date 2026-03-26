@@ -19,7 +19,7 @@ This project contains automated API tests for the **Yandex Scooter** service. Th
 Official API Documentation: [Yandex Scooter API](https://qa-scooter.praktikum-services.ru/docs/).
 
 ## 🧑‍💻Tech Stack & Tools
-- **Language:** Python 3.13+
+- **Language:** Python 3.11+
 - **Framework:** [Pytest](https://docs.pytest.org/)
 - **HTTP Client:** [Requests](https://requests.readthedocs.io)
 - **Reporting:** Allure Framework
@@ -53,7 +53,7 @@ The project is integrated with the **Allure Framework** to provide deep visibili
 *   **Hierarchical Grouping:** Tests are logically organized by **Features** (e.g., Courier Management) and **Stories** (e.g., Courier Authorization) for structured analysis.
 *   **Dynamic Documentation:** Detailed `@allure.title` and `@allure.description` transform technical code into readable business scenarios for stakeholders.
 *   **Step-by-Step Execution:** Comprehensive `@allure.step` logging tracks every action, from generating random test data to validating final JSON response structures.
-*   **Parametrization Support:** Clear visualization of multiple test variations (e.g., different scooter colors) within a single test suite.
+*   **Parametrization Support:** Clear visualization of multiple test variations (e.g. different scooter colors) within a single test suite.
 
 ## 🧪 Test Coverage
 The automation suite provides comprehensive coverage for the following functional modules of the **Yandex Scooter** API:
@@ -71,7 +71,7 @@ The automation suite provides comprehensive coverage for the following functiona
 
 ### 2. Order Management
 * **Order Creation:** 
-    * Functional testing of the order placement process with various color combinations (Black, Grey, both, or none).
+    * Functional testing of the order placement process with various color combinations (Black, Grey, both or none).
     * Verification of successful response status codes (201 Created).
     * Validation of the order `track` number presence and data type in the response.
 * **Order Retrieval:** 
@@ -80,7 +80,7 @@ The automation suite provides comprehensive coverage for the following functiona
 
 ### 3. Technical Implementation Details
 * **Data Parameterization:** Using `@pytest.mark.parametrize` to execute multiple test variations efficiently.
-* **Response Validation:** Strict verification of HTTP status codes, JSON keys, and specific error messages.
+* **Response Validation:** Strict verification of HTTP status codes, JSON keys and specific error messages.
 * **Clean Code Practices:** Centralized configuration for endpoints and reusable test data to ensure maintainability.
 
 ## ⚙️ Execution Guide
@@ -91,7 +91,7 @@ Clone the repository and set up a local virtual environment to ensure dependency
 > ```bash 
 > git clone https://github.com/AlyaSmirnova/Sprint_7
 > cd Sprint_7
-📦 Repository: [Sprint_5](https://github.com/AlyaSmirnova/Sprint_7)
+📦 Repository: [Sprint_7](https://github.com/AlyaSmirnova/Sprint_7)
 
 2. **Create a virtual environment**
 > ```bash 
@@ -120,7 +120,7 @@ To transform the raw execution data into a visual, interactive HTML report, use 
 The project is fully automated using **GitHub Actions**. Upon every `push` to the **main** branch or any `Pull Request` creation:
 
 1.  **Environment Provisioning:** A clean **Ubuntu** runner is initialized in the cloud environment.
-2.  **Dependency Management:** The Python **3.13** environment is set up, and all required libraries (`Requests`, `Pytest`, `Allure`) are installed from `requirements.txt`.
-3.  **Automated Execution:** The full API test suite is executed against the **Stellar Burgers** (or Scooter) production/staging environment.
+2.  **Dependency Management:** The Python **3.11** environment is set up, and all required libraries (`Requests`, `Pytest`, `Allure`) are installed from `requirements.txt`.
+3.  **Automated Execution:** The full API test suite is executed against the **Scooter** production/staging environment.
 4.  **Artifact Generation:** Test results are collected, and the **Allure report** is prepared for analysis, ensuring that any API regression is caught immediately.
 5.  **Status Reporting:** Real-time feedback on build success or failure is provided via GitHub status badges.
